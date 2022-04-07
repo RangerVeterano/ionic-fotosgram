@@ -1,0 +1,43 @@
+<div class="post">
+
+  <ion-item lines="none">
+
+    <ion-avatar slot="start">
+      <img src="/assets/avatars/{{ post.usuario.avatar }}" />
+    </ion-avatar>
+
+    <ion-label>
+      <h3>{{ post.usuario.nombre }}</h3>
+      <h5>{{ post.usuario.email }}</h5>
+    </ion-label>
+  </ion-item>
+
+  <!-- multiples imagenes -->
+  <swiper [config]="silderOps" *ngIf="post.img.length > 1">
+    <ng-template swiperSlide *ngFor="let img of post.img">
+      <div class="image-slide" [style]=" (img | imagen:post.usuario._id) | domSanitizer"></div>
+    </ng-template>
+  </swiper>
+
+  <!-- solo una imagen -->
+  <swiper [config]="silderOps" *ngIf="post.img.length === 1">
+    <ng-template swiperSlide>
+      <!-- Marcamos el primer elemento porque sabemos que solo tenemos una imagen -->
+      <div class="image-slide" [style]=" (post.img[0] | imagen:post.usuario._id) | domSanitizer"></div>
+    </ng-template>
+  </swiper>
+
+  <app-mapa [coords]="post.coords" *ngIf="post.coords"></app-mapa>
+
+  <ion-item lines="none">
+    <ion-icon slot="start" name="heart-outline"></ion-icon>
+    <ion-icon slot="end" name="bookmark"></ion-icon>
+  </ion-item>
+
+  <ion-item lines="none">
+    <ion-label class="ion-text-wrap">
+      {{post.mensaje}}
+    </ion-label>
+  </ion-item>
+
+</div>
